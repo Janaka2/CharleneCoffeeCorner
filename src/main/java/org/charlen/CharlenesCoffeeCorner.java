@@ -6,51 +6,47 @@ import java.util.List;
 public class CharlenesCoffeeCorner {
 
     public static void main(String[] args) {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Large Coffee", 3.50));
-        items.add(new Item("Extra Milk", 0.30));
-        items.add(new Item("Small Coffee", 2.50));
-        items.add(new Item("Special Roast", 0.90));
-        items.add(new Item("Bacon Roll", 4.50));
-        items.add(new Item("Orange Juice", 3.95));
+        var customer = new Customer(0);
 
-        Receipt receipt = new Receipt(items);
+        // First purchase
+        var items = new ArrayList<Item>();
+        items.add(new LargeCoffee());
+        items.add(new ExtraMilk(new LargeCoffee()));
+        var receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
         System.out.println(receipt);
-    }
 
-    public static class Receipt {
-        private final List<Item> items;
-        private double total;
+        // Second purchase
+        items = new ArrayList<>();
+        items.add(new SmallCoffee());
+        items.add(new BaconRoll());
+        items.add(new SpecialRoast(new SmallCoffee()));
+        receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+        System.out.println(receipt);
 
-        public Receipt(List<Item> items) {
-            this.items = items;
-            calculateTotal();
-        }
+        // Third purchase
+        items = new ArrayList<>();
+        items.add(new LargeCoffee());
+        items.add(new SmallCoffee());
+        items.add(new OrangeJuice());
+        items.add(new BaconRoll());
+        items.add(new SpecialRoast(new SmallCoffee()));
+        receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+        System.out.println(receipt);
 
-        private void calculateTotal() {
-            total = 0;
-            for (Item item : items) {
-                total += item.getPrice();
-            }
-        }
 
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Charlene's Coffee Corner\n");
-            sb.append("------------------------\n");
+        // Forth purchase
+        items = new ArrayList<>();
+        items.add(new MediumCoffee());
+        items.add(new SmallCoffee());
+        items.add(new FoamedMilk(new LargeCoffee()));
 
-            for (Item item : items) {
-                sb.append(String.format("%-20s %6.2f CHF\n", item.getName(), item.getPrice()));
-            }
+        items.add(new OrangeJuice());
+        items.add(new BaconRoll());
+        items.add(new SpecialRoast(new SmallCoffee()));
+        receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+        System.out.println(receipt);
 
-            sb.append("------------------------\n");
-            sb.append(String.format("Total: %15.2f CHF\n", total));
 
-            return sb.toString();
-        }
-        public double getTotal() {
-            return total;
-        }
+
     }
 }
