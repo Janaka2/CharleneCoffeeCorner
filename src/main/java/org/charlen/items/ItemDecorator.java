@@ -1,7 +1,7 @@
-package org.charlen;
+package org.charlen.items;
 
 public class ItemDecorator extends Item {
-    protected Item item;
+    private Item item;
 
     public ItemDecorator(Item item) {
         super(item.name, item.price);
@@ -11,5 +11,13 @@ public class ItemDecorator extends Item {
     @Override
     public double getPrice() {
         return item.getPrice() + price;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

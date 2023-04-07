@@ -1,4 +1,4 @@
-package org.charlen;
+package org.charlen.items;
 
 public class ExtraMilk extends ItemDecorator {
     public ExtraMilk(Item item) {

@@ -1,4 +1,6 @@
-package org.charlen;
+package org.charlen.snacks;
+
+import org.charlen.items.Item;
 
 public class BaconRoll extends Item {
     public BaconRoll() {

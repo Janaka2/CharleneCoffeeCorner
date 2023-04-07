@@ -1,4 +1,7 @@
-package org.charlen;
+package org.charlen.beverages;
+
+import org.charlen.enums.BeverageType;
+import org.charlen.items.Item;
 
 public class Beverage extends Item {
     BeverageType type;

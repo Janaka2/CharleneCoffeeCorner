@@ -1,4 +1,7 @@
-package org.charlen;
+package org.charlen.discount.strategies;
+
+import org.charlen.Customer;
+import org.charlen.items.Item;
 
 import java.util.List;
 

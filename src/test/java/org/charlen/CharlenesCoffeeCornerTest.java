@@ -1,47 +1,77 @@
-//package org.charlen;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//public class CharlenesCoffeeCornerTest {
-//
-//    @Test
-//    public void testReceiptTotal() {
-//        List<Item> items = new ArrayList<>();
-//        items.add(new Beverage("Small Coffee", 2.50, BeverageType.COFFEE));
-//        items.add(new Beverage("Large Coffee", 3.50, BeverageType.COFFEE));
-//        items.add(new Beverage("Orange Juice", 3.95, BeverageType.OTHER));
-//        items.add(new Item("Bacon Roll", 4.50));
-//        items.add(new Item("Extra Milk", 0.30));
-//        items.add(new Item("Special Roast", 0.90));
-//
-//        Receipt receipt = new Receipt(items);
-//        assertEquals(14.35, receipt.getTotal());
-//    }
-//
-//    @Test
-//    public void testFreeBeverageDiscount() {
-//        List<Item> items = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            items.add(new Beverage("Small Coffee", 2.50, Beverage.Type.COFFEE));
-//        }
-//
-//        CharlenesCoffeeCorner.Receipt receipt = new CharlenesCoffeeCorner.Receipt(items);
-//        assertEquals(10.00, receipt.getTotal());
-//    }
-//
-//    @Test
-//    public void testFreeExtraDiscount() {
-//        List<Item> items = new ArrayList<>();
-//        items.add(new Item("Bacon Roll", 4.50));
-//        items.add(new Item("Extra Milk", 0.30));
-//        items.add(new Beverage("Small Coffee", 2.50, Beverage.Type.COFFEE));
-//
-//        CharlenesCoffeeCorner.Receipt receipt = new CharlenesCoffeeCorner.Receipt(items);
-//        assertEquals(6.50, receipt.getTotal());
-//    }
-//}
+package org.charlen;
+
+import org.charlen.beverages.LargeCoffee;
+import org.charlen.beverages.MediumCoffee;
+import org.charlen.discount.strategies.FreeBeverageDiscount;
+import org.charlen.discount.strategies.FreeExtraDiscount;
+import org.charlen.items.ExtraMilk;
+import org.charlen.items.Item;
+import org.charlen.snacks.BaconRoll;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class CharlenesCoffeeCornerTest {
+
+    @Test
+    public void testReceiptTotal() {
+        var items = new ArrayList<Item>();
+        items.add(new LargeCoffee());
+        items.add(new ExtraMilk(new LargeCoffee()));
+        Customer customer = new Customer(0);
+        var receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+        System.out.println(receipt);
+
+        assertEquals(7.30, receipt.getTotal());
+        assertEquals(2, customer.getBeverageStamps());
+    }
+
+    @Test
+    public void testFreeBeverageDiscount() {
+        List<Item> items = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            items.add(new LargeCoffee());
+        }
+
+        Customer customer = new Customer(0);
+        var receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+
+        assertEquals(21.00, receipt.getTotal());
+        assertEquals(2, customer.getBeverageStamps());
+    }
+
+    @Test
+    public void testFreeExtraDiscount() {
+        List<Item> items = new ArrayList<>();
+        items.add(new BaconRoll());
+        items.add(new ExtraMilk(new LargeCoffee()));
+
+        Customer customer = new Customer(0);
+        var receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+
+        assertEquals(8.00, receipt.getTotal());
+        assertEquals(1, customer.getBeverageStamps());
+    }
+
+    @Test
+    public void testBeverageStamps() {
+        List<Item> items = new ArrayList<>();
+
+        items.add(new LargeCoffee());
+        items.add(new LargeCoffee());
+
+        items.add(new MediumCoffee());
+        items.add(new MediumCoffee());
+
+        items.add(new LargeCoffee());
+
+        Customer customer = new Customer(0);
+        var receipt = new Receipt(customer, items, List.of(new FreeBeverageDiscount(), new FreeExtraDiscount()));
+
+        assertEquals(13.50, receipt.getTotal());
+        assertEquals(0, customer.getBeverageStamps());
+    }
+}

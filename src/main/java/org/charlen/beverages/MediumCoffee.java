@@ -1,4 +1,6 @@
-package org.charlen;
+package org.charlen.beverages;
+
+import org.charlen.enums.BeverageType;
 
 public class MediumCoffee extends Beverage {
     public MediumCoffee() {

@@ -1,4 +1,4 @@
-package org.charlen;
+package org.charlen.items;
 
 public class SpecialRoast extends ItemDecorator {
     public SpecialRoast(Item item) {

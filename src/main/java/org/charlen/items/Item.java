@@ -1,8 +1,8 @@
-package org.charlen;
+package org.charlen.items;
 
 public class Item {
-     String name;
-     double price;
+    protected String name;
+    protected double price;
 
     public Item(String name, double price) {
         this.name = name;
