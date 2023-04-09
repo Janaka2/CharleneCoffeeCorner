@@ -1,4 +1,4 @@
-package org.charlen.snacks;
+package org.charlen.items.snacks;
 
 import org.charlen.items.Item;
 

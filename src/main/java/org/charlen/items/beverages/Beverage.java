@@ -1,4 +1,4 @@
-package org.charlen.beverages;
+package org.charlen.items.beverages;
 
 import org.charlen.enums.BeverageType;
 import org.charlen.items.Item;

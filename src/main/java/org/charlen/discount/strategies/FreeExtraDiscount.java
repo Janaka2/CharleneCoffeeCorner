@@ -1,10 +1,10 @@
 package org.charlen.discount.strategies;
 
 import org.charlen.*;
-import org.charlen.beverages.Beverage;
+import org.charlen.items.beverages.Beverage;
 import org.charlen.items.Item;
 import org.charlen.items.ItemDecorator;
-import org.charlen.snacks.BaconRoll;
+import org.charlen.items.snacks.BaconRoll;
 
 import java.util.List;
 
